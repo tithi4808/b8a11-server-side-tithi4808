@@ -5,11 +5,14 @@ const app = express()
 require('dotenv').config()
 const port = process.env.PORT || 5000
 
-app.use(cors())
+app.use(cors({
+  origin: ["https://booklet-a048e.web.app","http://localhost:5173/"],
+  credentials:true
+}));
 app.use(express.json())
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('booklet server side is running')
 })
 
 
@@ -72,13 +75,31 @@ async function run() {
           
 
           app.get('/comment', async(req, res) => {
-            const cursor=commentCollection.find()
+            console.log(req.query.blog_id)
+            let query={}
+            
+            if(req.query?.blog_id)
+            {
+              query={blog_id:req.query.blog_id}
+            }
+
+            const cursor=commentCollection.find(query)
             const result = await cursor.toArray()
             res.send(result) 
               
           });
           app.get('/wishlist', async(req, res) => {
-            const cursor=wishlistCollection.find()
+
+            
+            console.log(req.query.email)
+            let query={}
+
+            if(req.query?.email)
+            {
+              query={email:req.query.email}
+            }
+           
+            const cursor=wishlistCollection.find(query)
             const result = await cursor.toArray()
             res.send(result) 
               
@@ -115,8 +136,8 @@ async function run() {
             res.send(result)
           })
           app.post("/wishlist",async(req,res)=>{
-            const newwishlist=req.body
-            const result = await wishlistCollection.insertOne(newwishlist);
+            const newishlist=req.body
+            const result = await wishlistCollection.insertOne(newishlist);
             res.send(result)
           })
           
