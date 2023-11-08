@@ -35,8 +35,10 @@ async function run() {
 
         const database1 = client.db("Comments");
         const commentCollection = database1.collection("comment");
-        const database2 = client.db("Wishlist");
-        const WishlistCollection = database2.collection("wishlist");
+
+        const database2 = client.db("mywishlist");
+        const wishlistCollection = database2.collection("mywishlist");
+        
 
         app.get('/recentblogs', async(req, res) => {
             const cursor=AllblogsCollection.find().sort({ published_date: -1 })
@@ -76,11 +78,12 @@ async function run() {
               
           });
           app.get('/wishlist', async(req, res) => {
-            const cursor=WishlistCollection.find()
+            const cursor=wishlistCollection.find()
             const result = await cursor.toArray()
             res.send(result) 
               
           });
+         
 
           app.put("/allblogs/:id",async(req,res)=>{
             const id=req.params.id
@@ -104,15 +107,7 @@ async function run() {
             
             
           })
-          app.delete("/wishlist/:id",async(req,res)=>{
-            const id=req.params.id
-            
-             const query = {_id:new ObjectId(id)}
-             const result = await WishlistCollection.deleteOne(query);
-             res.send(result)
-  
-            
-          })
+         
 
           app.post("/comment",async(req,res)=>{
             const newcomment=req.body
@@ -121,9 +116,10 @@ async function run() {
           })
           app.post("/wishlist",async(req,res)=>{
             const newwishlist=req.body
-            const result = await WishlistCollection.insertOne(newwishlist);
+            const result = await wishlistCollection.insertOne(newwishlist);
             res.send(result)
           })
+          
           app.get("/allblogs/:id",async(req,res)=>{
 
             const id=req.params.id
@@ -134,15 +130,14 @@ async function run() {
   
   
           })
-          app.get("/wishlist/:id",async(req,res)=>{
-
-            const id=req.params.id
+          app.delete("/wishlist/:_id",async(req,res)=>{
+            const id=req.params._id
             
              const query = {_id:new ObjectId(id)}
-             const result = await AllblogsCollection.findOne(query);
+             const result = await wishlistCollection.deleteOne(query);
              res.send(result)
   
-  
+            
           })
 
 
