@@ -51,7 +51,7 @@ async function run() {
               
           });
           app.get('/featuredblogs', async(req, res) => {
-            const cursor=AllblogsCollection.find().sort({ LongDescription: 1 })
+            const cursor=AllblogsCollection.find().sort({ $strLenBytes: { LongDescription: 1 } })
             const result = await cursor.toArray()
             res.send(result) 
               
