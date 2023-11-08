@@ -36,7 +36,7 @@ async function run() {
         const database1 = client.db("Comments");
         const commentCollection = database1.collection("comment");
         const database2 = client.db("Wishlist");
-        const wishlistCollection = database2.collection("wishlist");
+        const WishlistCollection = database2.collection("wishlist");
 
         app.get('/allblogs', async(req, res) => {
             const cursor=AllblogsCollection.find().sort({ published_date: -1 })
@@ -65,7 +65,7 @@ async function run() {
               
           });
           app.get('/wishlist', async(req, res) => {
-            const cursor=wishlistCollection.find()
+            const cursor=WishlistCollection.find()
             const result = await cursor.toArray()
             res.send(result) 
               
@@ -101,7 +101,7 @@ async function run() {
           })
           app.post("/wishlist",async(req,res)=>{
             const newwishlist=req.body
-            const result = await wishlistCollection.insertOne(newwishlist);
+            const result = await WishlistCollection.insertOne(newwishlist);
             res.send(result)
           })
           app.get("/allblogs/:id",async(req,res)=>{
