@@ -104,6 +104,15 @@ async function run() {
             
             
           })
+          app.delete("/wishlist/:id",async(req,res)=>{
+            const id=req.params.id
+            
+             const query = {_id:new ObjectId(id)}
+             const result = await WishlistCollection.deleteOne(query);
+             res.send(result)
+  
+            
+          })
 
           app.post("/comment",async(req,res)=>{
             const newcomment=req.body
@@ -116,6 +125,16 @@ async function run() {
             res.send(result)
           })
           app.get("/allblogs/:id",async(req,res)=>{
+
+            const id=req.params.id
+            
+             const query = {_id:new ObjectId(id)}
+             const result = await AllblogsCollection.findOne(query);
+             res.send(result)
+  
+  
+          })
+          app.get("/wishlist/:id",async(req,res)=>{
 
             const id=req.params.id
             
