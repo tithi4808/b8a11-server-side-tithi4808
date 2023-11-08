@@ -55,7 +55,7 @@ async function run() {
             const result = await cursor.toArray();
 
             result.sort((a, b) =>
-              a.LongDescription.length - b.LongDescription.length
+              b.LongDescription.length - a.LongDescription.length
             );
 
             res.send(result);
