@@ -38,7 +38,13 @@ async function run() {
         const database2 = client.db("Wishlist");
         const WishlistCollection = database2.collection("wishlist");
 
-        app.get('/allblogs', async(req, res) => {
+        app.get('/recentblogs', async(req, res) => {
+            const cursor=AllblogsCollection.find().sort({ published_date: -1 })
+            const result = await cursor.toArray()
+            res.send(result) 
+              
+          });
+          app.get('/allblogs', async(req, res) => {
             const cursor=AllblogsCollection.find().sort({ published_date: -1 })
             const result = await cursor.toArray()
             res.send(result) 
