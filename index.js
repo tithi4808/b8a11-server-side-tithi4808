@@ -42,12 +42,19 @@ async function run() {
             res.send(result) 
               
           });
+          app.get('/featuredblogs', async(req, res) => {
+            const cursor=AllblogsCollection.find().sort({ LongDescription: -1 })
+            const result = await cursor.toArray()
+            res.send(result) 
+              
+          });
 
           app.post("/allblogs",async(req,res)=>{
             const newblogs=req.body
             const result = await AllblogsCollection.insertOne(newblogs);
             res.send(result)
           })
+          
 
           app.get('/comment', async(req, res) => {
             const cursor=commentCollection.find()
