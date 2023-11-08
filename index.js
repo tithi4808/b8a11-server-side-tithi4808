@@ -45,7 +45,7 @@ async function run() {
               
           });
           app.get('/allblogs', async(req, res) => {
-            const cursor=AllblogsCollection.find().sort({ published_date: -1 })
+            const cursor=AllblogsCollection.find()
             const result = await cursor.toArray()
             res.send(result) 
               
